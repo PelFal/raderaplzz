@@ -51,13 +51,23 @@ public class CountryServiceTest {
         assertEquals(List.of("English", "Latvian"), result);
     }
     @Test
-    void getSortedLaungagesReturnsAlphabeticallySortedLangues() {
+    void getSortedBorders_returnsSortedBorders() {
         CountryApiClient CountryApiClient;
         when(ApiClient.fetchCountryByName("Latvia"))
                 .thenReturn(LATVIA);
 
-        var result = countryService.getSortedBorders("Latvia");
+        List<String> result = countryService.getSortedBorders("Latvia");
 
-        assertEquals(List.of("English", "Latvian"), result);
+        assertEquals(List.of("LV", "BY", "PL", "RU"), result);
+    }
+    @Test
+    void getRegionInfo_returnsCorrectFormat() {
+        CountryApiClient CountryApiClient;
+        when(ApiClient.fetchCountryByName("Latvia"))
+                .thenReturn(LATVIA);
+
+        List<String> result = countryService.getSortedBorders("Latvia");
+
+        assertEquals(List.of(""), result);
     }
 }
