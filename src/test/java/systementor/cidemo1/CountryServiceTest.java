@@ -46,7 +46,7 @@ public class CountryServiceTest {
         when(ApiClient.fetchCountryByName("Latvia"))
             .thenReturn(LATVIA);
 
-        var result = countryService.getSortedBorders("Latvia");
+        List<String> result = countryService.getSortedLanguages("Latvia");
 
         assertEquals(List.of("English", "Latvian"), result);
     }
@@ -58,7 +58,7 @@ public class CountryServiceTest {
 
         List<String> result = countryService.getSortedBorders("Latvia");
 
-        assertEquals(List.of("LV", "BY", "PL", "RU"), result);
+        assertEquals(List.of("BLR", "EST", "LTU", "RUS"), result);
     }
     @Test
     void getRegionInfo_returnsCorrectFormat() {
@@ -66,8 +66,30 @@ public class CountryServiceTest {
         when(ApiClient.fetchCountryByName("Latvia"))
                 .thenReturn(LATVIA);
 
-        List<String> result = countryService.getSortedBorders("Latvia");
+        String result = countryService.getRegionInfo("Latvia");
 
-        assertEquals(List.of(""), result);
+        assertEquals("Europe / Northern Europe", result);
+    }
+
+    @Test
+    void isHighlyPopulated_returnsFalseForLatvia() {
+        CountryApiClient CountryApiClient;
+        when(ApiClient.fetchCountryByName("Latvia"))
+                .thenReturn(LATVIA);
+
+        boolean result = countryService.isHighlyPopulated("Latvia");
+
+        assertFalse(result);
+    }
+
+    @Test
+    void getPopulationDensity_returnsCorrectValue() {
+        CountryApiClient CountryApiClient;
+        when(ApiClient.fetchCountryByName("Latvia"))
+                .thenReturn(LATVIA);
+
+        double density = countryService.getPopulationDensity("Latvia");
+
+        assertEquals(1829000.0/64559.0, density);
     }
 }
